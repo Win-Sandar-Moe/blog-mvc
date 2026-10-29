@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/masterLayout :: layout(~{::main})}"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<main role="main">
+		<div class="container-fluid p-0">
+			<!-- Header Banner -->
+			<div
+				class="bg-primary text-white d-flex flex-column flex-md-row justify-content-between align-items-center p-5">
+				<h3 class="m-0 mb-3 mb-md-0">
+					<i class="fas fa-cog me-2"></i>Dashboard
+				</h3>
+
+				<!-- Search Bar -->
+				<div class="input-group" style="max-width: 300px;">
+					<input type="text" class="form-control" placeholder="Search..."
+						aria-label="Search" />
+					<button class="btn btn-success" type="button">Search</button>
+				</div>
+			</div>
+
+			<!-- Action Buttons -->
+			<div class="row py-4 px-3">
+				<div class="col-12 d-flex justify-content-center flex-wrap gap-3">
+					<button class="btn btn-warning px-4 py-2 rounded"
+						data-bs-toggle="modal" data-bs-target="#categoryModal">
+						<i class="fas fa-plus me-1"></i>Add Category
+					</button>
+					<button class="btn btn-success px-4 py-2 rounded"
+						data-bs-toggle="modal" data-bs-target="#userModal">
+						<i class="fas fa-plus me-1"></i>Add User
+					</button>
+					<button class="btn btn-primary px-4 py-2 rounded"
+						data-bs-toggle="modal" data-bs-target="#postModal">
+						<i class="fas fa-plus me-1"></i>Add Post
+					</button>
+				</div>
+			</div>
+
+			<div class="container p-5">
+				<div class="row">
+					<div class="col-md-10">
+						<div th:replace="~{fragments/post-table.html :: postTable}"></div>
+					</div>
+					
+					<div class="col-md-2">
+						<div class="d-flex flex-column">
+							<div class="bg-warning text-white text-center p-3 rounded mb-3">
+								<h3>Category</h3>
+								<h3 class="m-0 mb-3 mb-md-0">
+									<i class="fas fa-folder me-2"></i> 
+									<span th:text="${categoryCount}"></span>
+								</h3>
+							</div>
+							<div class="bg-success text-white text-center p-3 rounded mb-3">
+								<h3>Authors</h3>
+								<h3 class="m-0 mb-3 mb-md-0">
+									<i class="fas fa-user me-2"></i>
+									<span th:text="${authorCount}"></span>
+								</h3>
+							</div>
+							<div class="bg-primary text-white text-center p-3 rounded mb-3">
+								<h3>Post</h3>
+								<h3 class="m-0 mb-3 mb-md-0">
+									<i class="fas fa-pen me-2"></i>
+									<span th:text="${postCount}"></span>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="modal fade" id="categoryModal" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="categoryModal">Category
+								Form</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<form th:object="${category}" th:action="@{/add-categoy}"
+							method="post">
+							<div class="modal-body">
+								<div class="mb-3">
+									<label class="form-label">Category Name</label> <input
+										type="text" class="form-control" th:field="*{categoryName}" />
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">Close</button>
+								<button type="sumbit" class="btn btn-primary"
+									data-bs-dismiss="modal">Save Category</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="userModal" tabindex="-1"
+			aria-labelledby="userModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="userModal">User Form</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form th:object="${user}" th:action="@{/add-user}" method="post">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label class="form-label">Full Name</label> <input type="text"
+									class="form-control" th:field="*{fullName}" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Email</label> <input type="email"
+									class="form-control" th:field="*{email}" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Phone Number</label> <input
+									type="text" class="form-control" th:field="*{phoneNumber}" />
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<input type="submit" value="save user" class="btn btn-primary"
+								data-bs-dismiss="modal" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<div class="modal fade" id="postModal" tabindex="-1"
+			aria-labelledby="postModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="postModal">Post Form</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form th:object="${post}" th:action="@{/add-post}" method="post">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label class="form-label">Title</label> <input type="text"
+									th:field="*{title}" class="form-control" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Content</label>
+								<textarea rows="4" type="text" th:field="*{content}"
+									class="form-control"></textarea>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Category</label> <select
+									th:field="*{category.id}" class="form-control">
+									<option value="">Select Category</option>
+									<option th:each="cat :${categories}" th:value="${cat.id}"
+										th:text="${cat.categoryName}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">User</label> <select
+									th:field="*{user.id}" class="form-control">
+									<option value="">Select User</option>
+									<option th:each="user :${users}" th:value="${user.id}"
+										th:text="${user.fullName}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<input type="submit" value="save user" class="btn btn-primary"
+								data-bs-dismiss="modal" />
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+	</main>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/masterLayout :: layout(~{::main})}" 
+xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<main>
+<div class="container-fluid p-0">
+<div th:replace="~{fragments/category-banner.html :: categoryBanner}"></div>
+
+<div class="container">
+	<div class="row my-5">
+	<div class="offset-md-2 col-md-8">
+		<div class="card">
+			<table class="table table-striped table-hover table-bordered rounded">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Category Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cat :${categories}">
+						<td th:text="${cat.id}"></td>
+						<td th:text="${cat.categoryName}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+</main>
+</body>
+</html>
